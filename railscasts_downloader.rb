@@ -1,7 +1,5 @@
 #!/usr/bin/ruby
-require 'rubygems'
 require 'rss'
-require 'progressbar'
 
 p 'Downloading rss index'
 
@@ -16,7 +14,6 @@ p "Downloading #{missing_filenames.size} missing videos"
 
 missing_videos_urls = videos_urls.select { |video_url| missing_filenames.any? { |filename| video_url.match filename } }
 
-download_bar = ProgressBar.new('Downloading',missing_videos_urls.size )
 
 
 missing_videos_urls.each do |video_url|
@@ -24,6 +21,5 @@ missing_videos_urls.each do |video_url|
   p filename
   p %x(wget #{video_url} -O #{filename}.tmp )
   p %x(mv #{filename}.tmp #{filename} )
-  download_bar.inc(1)
 end
 p 'Finished synchronization'
